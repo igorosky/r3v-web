@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+test-results/
+.vitest/
+**/__screenshots__/
+*.tsbuildinfo
+.DS_Store

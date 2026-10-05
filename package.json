@@ -1,0 +1,48 @@
+{
+  "name": "@r3v/web",
+  "version": "0.1.0",
+  "description": "Headless browser viewer for R3V renderer output",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./ui": {
+      "types": "./dist/ui/index.d.ts",
+      "import": "./dist/ui.js"
+    },
+    "./ui.css": "./dist/ui.css"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "engines": {
+    "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepack": "npm run typecheck && npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.1",
+    "@vitest/browser-playwright": "5.0.3",
+    "oxlint": "1.88.0",
+    "oxlint-tsgolint": "7.0.2004",
+    "playwright": "1.63.0",
+    "roslib": "2.1.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.3",
+    "vitest": "5.0.3"
+  }
+}
