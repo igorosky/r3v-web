@@ -1,0 +1,227 @@
+/*
+ * Optional default styles for @r3v/web/ui, published as @r3v/web/ui.css.
+ *
+ * Single-class selectors: element rules of the page (e.g. a global `button` style) don't leak
+ * in, and the application's class rules override them. Surfaces are mixed from the inherited
+ * text colour, so the list fits light and dark pages; set these on the list or any ancestor:
+ *
+ *   --r3v-accent         visible switch and keyboard focus ring (default: text colour)
+ *   --r3v-pending-color  request awaiting the renderer
+ *   --r3v-error-color    request without an answer
+ *   --r3v-surface, --r3v-border, --r3v-hover, --r3v-radius, --r3v-max-height
+ */
+
+.r3v-scene-list {
+  --_accent: var(--r3v-accent, currentColor);
+  --_pending: var(--r3v-pending-color, light-dark(#a15c07, #f0c674));
+  --_error: var(--r3v-error-color, light-dark(#b42318, #f4a08f));
+  --_border: var(--r3v-border, color-mix(in srgb, currentColor 13%, transparent));
+  --_hover: var(--r3v-hover, color-mix(in srgb, currentColor 7%, transparent));
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid var(--_border);
+  border-radius: var(--r3v-radius, 12px);
+  background: var(--r3v-surface, color-mix(in srgb, currentColor 3%, transparent));
+  font-size: .875rem;
+  line-height: 1.4;
+  transition: opacity .2s;
+}
+
+.r3v-scene-list[data-disabled] {
+  opacity: .5;
+}
+
+.r3v-scene-list__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px 9px;
+  border-bottom: 1px solid var(--_border);
+}
+
+.r3v-scene-list__title {
+  font-size: .75em;
+  font-weight: 650;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .72;
+}
+
+.r3v-scene-list__count {
+  font-size: .75em;
+  font-variant-numeric: tabular-nums;
+  opacity: .55;
+}
+
+.r3v-scene-list__items {
+  max-height: var(--r3v-max-height, none);
+  margin: 0;
+  padding: 4px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.r3v-scene-list__items:empty {
+  display: none;
+}
+
+.r3v-scene-list__item {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 36px;
+  padding: 2px 4px;
+  border-radius: calc(var(--r3v-radius, 12px) - 4px);
+  transition: background-color .12s;
+}
+
+.r3v-scene-list__item:hover {
+  background: var(--_hover);
+}
+
+.r3v-scene-list[data-disabled] .r3v-scene-list__item:hover {
+  background: none;
+}
+
+.r3v-scene-list__main {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  padding: 0 6px;
+}
+
+.r3v-scene-list__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: opacity .15s;
+}
+
+/* Hidden elements stay listed: they can be shown again or focused. */
+.r3v-scene-list__item[data-visible="false"] .r3v-scene-list__label {
+  opacity: .45;
+}
+
+.r3v-scene-list__status {
+  flex: none;
+  font-size: .75em;
+  font-weight: 550;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.r3v-scene-list__status:not(:empty) {
+  margin-left: 8px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: var(--_pending);
+  background: color-mix(in srgb, var(--_pending) 15%, transparent);
+}
+
+.r3v-scene-list__item[data-timeout] .r3v-scene-list__status {
+  color: var(--_error);
+  background: color-mix(in srgb, var(--_error) 15%, transparent);
+}
+
+.r3v-scene-list__toggle,
+.r3v-scene-list__focus {
+  all: unset;
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  box-sizing: border-box;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color .12s, color .12s, opacity .12s, transform .08s;
+}
+
+.r3v-scene-list__toggle:hover,
+.r3v-scene-list__focus:hover {
+  background: var(--_hover);
+}
+
+.r3v-scene-list__toggle:active,
+.r3v-scene-list__focus:active {
+  transform: scale(.9);
+}
+
+.r3v-scene-list__toggle:focus-visible,
+.r3v-scene-list__focus:focus-visible {
+  outline: 2px solid var(--_accent);
+  outline-offset: -2px;
+}
+
+.r3v-scene-list__toggle:disabled,
+.r3v-scene-list__focus:disabled {
+  background: none;
+  cursor: default;
+  transform: none;
+}
+
+.r3v-scene-list__toggle[aria-checked="true"] {
+  color: var(--_accent);
+}
+
+.r3v-scene-list__toggle[aria-checked="false"] {
+  opacity: .45;
+}
+
+.r3v-scene-list__toggle[aria-checked="false"]:hover {
+  opacity: .8;
+}
+
+/* The camera button stays available but quiet until the row is in use. */
+.r3v-scene-list__focus {
+  opacity: .5;
+}
+
+.r3v-scene-list__item:hover .r3v-scene-list__focus,
+.r3v-scene-list__focus:focus-visible {
+  opacity: 1;
+}
+
+.r3v-scene-list__icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* A request awaiting the renderer spins a ring around the switch. */
+.r3v-scene-list__item[data-pending] .r3v-scene-list__toggle {
+  opacity: 1;
+}
+
+.r3v-scene-list__item[data-pending] .r3v-scene-list__toggle::after {
+  position: absolute;
+  inset: 3px;
+  border: 1.5px solid transparent;
+  border-top-color: var(--_pending);
+  border-right-color: var(--_pending);
+  border-radius: 50%;
+  animation: r3v-scene-list-spin .9s linear infinite;
+  content: "";
+}
+
+@keyframes r3v-scene-list-spin {
+  to { transform: rotate(1turn); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .r3v-scene-list__item[data-pending] .r3v-scene-list__toggle::after {
+    border: 1.5px dashed var(--_pending);
+    animation: none;
+  }
+}
+
+.r3v-scene-list__empty {
+  margin: 0;
+  padding: 22px 14px;
+  font-size: .85em;
+  text-align: center;
+  opacity: .6;
+}
