@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#1c2a3b"/>
+    </pattern>
+    <radialGradient id="glow">
+      <stop stop-color="#203a3b"/>
+      <stop offset="1" stop-color="#0d1420"/>
+    </radialGradient>
+  </defs>
+  <path fill="url(#glow)" d="M0 0h960v540H0z"/>
+  <path fill="url(#grid)" d="M0 0h960v540H0z"/>
+  <g stroke="#8cc5b4" stroke-width="2" fill="none" stroke-linejoin="round">
+    <path d="m480 145 82 47v94l-82 47-82-47v-94z"/>
+    <path d="m398 192 82 48 82-48m-82 48v93m0-188v47"/>
+    <path d="m480 192 41 24m-41-24-41 24" stroke="#466c69"/>
+  </g>
+  <text x="480" y="405" text-anchor="middle" fill="#a5b4c7" font-family="system-ui, sans-serif" font-size="17" letter-spacing="3">YOUR VIEW GOES HERE</text>
+</svg>

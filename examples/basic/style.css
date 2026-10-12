@@ -1,0 +1,53 @@
+:root {
+  color: #dde5ef;
+  background: #0a0f17;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  color-scheme: dark;
+  line-height: 1.5;
+}
+
+body { margin: 0; }
+main { max-width: 1160px; margin: 0 auto; padding: 64px 28px 24px; }
+.page-header { max-width: 720px; margin-bottom: 40px; }
+.eyebrow { color: #86b9b3; font-size: 11px; font-weight: 700; letter-spacing: .15em; }
+h1 { margin: 12px 0; font-size: clamp(30px, 4vw, 46px); letter-spacing: -.04em; line-height: 1.2; }
+h2 { margin: 6px 0 0; font-size: 20px; letter-spacing: -.02em; }
+p { color: #95a3b5; }
+.page-header p { font-size: 16px; }
+.examples { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.example { min-width: 0; padding: 24px; border: 1px solid #253040; border-radius: 16px; background: #111925; }
+.example-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.example > p { font-size: 13px; margin-bottom: 24px; }
+.status { flex-shrink: 0; border: 1px solid #3a4555; border-radius: 20px; padding: 4px 10px; color: #9faaba; font-size: 11px; }
+.status[data-active="true"] { border-color: #2b534d; color: #9fd5bf; background: #19342e; }
+.client video, .client canvas { display: block; width: 100%; margin-top: 16px; aspect-ratio: 16 / 9; object-fit: contain; border: 1px solid #2a3749; border-radius: 10px; background: #0d1420; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 20px; }
+.renderer { margin-bottom: 24px; }
+.scene { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 16px 0 0; padding: 0; list-style: none; font-size: 13px; }
+.scene label { display: flex; align-items: center; gap: 8px; }
+.scene input { accent-color: #a7d9c7; }
+.scene li[data-requested="true"] span::after { content: ' · showing…'; color: #e2c58a; }
+.scene li[data-requested="false"] span::after { content: ' · hiding…'; color: #e2c58a; }
+/* The optional SceneList takes the page's colours; only its accents are tuned. */
+.scene-list { --r3v-accent: #a7d9c7; --r3v-pending-color: #e2c58a; --r3v-error-color: #e6a796; margin-top: 16px; }
+.client-note { margin: 12px 0 0; font-size: 12px; }
+.client-note code { display: inline; margin: 0; padding: 0; border: 0; font-size: 11px; }
+.offline { margin: 8px 0 0; color: #e2c58a; font-size: 12px; }
+.scene-error { min-height: 1.5em; margin: 8px 0 0; color: #e6a796; font: 12px monospace; }
+button { border: 1px solid #9bcab9; border-radius: 7px; padding: 10px 16px; background: #acdcca; color: #132c24; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+button.secondary { background: transparent; color: #dce5ef; border-color: #46566d; }
+button:disabled { opacity: .4; cursor: default; }
+button:focus-visible { outline: 2px solid #d0f4e5; outline-offset: 4px; }
+code { display: block; margin-top: 32px; padding-top: 18px; border-top: 1px solid #253040; color: #8699b0; font-size: 12px; overflow-wrap: anywhere; }
+.control-toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.renderer .control-toggle { margin-top: 12px; }
+.control-toggle input { accent-color: #a7d9c7; }
+.producer-info { margin-top: 16px; color: #95a3b5; font: 12px monospace; }
+.producer-info strong[data-active="true"] { color: #a7d9c7; }
+footer { margin-top: 32px; color: #7d8a9d; font-size: 12px; }
+@media (max-width: 800px) {
+  main { padding: 32px 16px 24px; }
+  .examples { grid-template-columns: 1fr; }
+  .example { padding: 20px; }
+}

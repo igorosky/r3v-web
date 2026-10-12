@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>R3V · Headless viewer</title>
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <main>
+      <header class="page-header">
+        <span class="eyebrow">R3V / WEB VIEWER</span>
+        <h1>Your UI. Our state.</h1>
+        <p>Four clients share one renderer. The viewer drives each video or canvas and mirrors the renderer's scene; every button, checkbox and status label below is application code.</p>
+      </header>
+
+      <section class="renderer" aria-label="Demo renderer">
+        <div class="producer-info">Renderer: <strong data-producer>Suspended</strong> · Frames: <span data-frames>0</span> · Latency: 400 ms</div>
+        <label class="control-toggle"><input type="checkbox" data-control="answers" checked /> Renderer answers visibility requests (off = MVP renderer, requests time out after 5 s)</label>
+      </section>
+
+      <section class="examples" aria-label="Clients">
+        <article class="example client">
+          <div class="example-heading">
+            <div><span class="eyebrow">CLIENT A</span><h2>Operator view</h2></div>
+            <span class="status" role="status">Not attached</span>
+          </div>
+          <video poster="./poster.svg" aria-label="Client A view"></video>
+          <div class="actions">
+            <button type="button" data-action="demand" class="secondary">Stop</button>
+            <label class="control-toggle"><input type="checkbox" data-control="connected" checked /> Control channel connected</label>
+          </div>
+          <ul class="scene" data-scene aria-label="Scene elements"></ul>
+          <p class="offline" data-offline hidden>Control channel offline: requests will time out.</p>
+          <p class="scene-error" data-scene-error role="alert"></p>
+          <div class="actions">
+            <button type="button" data-action="attach">Attach viewer</button>
+            <button type="button" data-action="destroy" class="secondary">Destroy viewer</button>
+          </div>
+        </article>
+
+        <article class="example client">
+          <div class="example-heading">
+            <div><span class="eyebrow">CLIENT B</span><h2>Observer view</h2></div>
+            <span class="status" role="status">Not attached</span>
+          </div>
+          <video poster="./poster.svg" aria-label="Client B view"></video>
+          <div class="actions">
+            <button type="button" data-action="demand" class="secondary">Stop</button>
+            <label class="control-toggle"><input type="checkbox" data-control="connected" checked /> Control channel connected</label>
+          </div>
+          <ul class="scene" data-scene aria-label="Scene elements"></ul>
+          <p class="offline" data-offline hidden>Control channel offline: requests will time out.</p>
+          <p class="scene-error" data-scene-error role="alert"></p>
+          <div class="actions">
+            <button type="button" data-action="attach">Attach viewer</button>
+            <button type="button" data-action="destroy" class="secondary">Destroy viewer</button>
+          </div>
+        </article>
+
+        <article class="example client" data-mvp="true">
+          <div class="example-heading">
+            <div><span class="eyebrow">CLIENT C</span><h2>MVP integration</h2></div>
+            <span class="status" role="status">Not attached</span>
+          </div>
+          <p class="client-note">Default options against a renderer without scene support: the library's built-in scene (voxels, rover, manipulator) answers locally, so the image does not change.</p>
+          <video poster="./poster.svg" aria-label="Client C view"></video>
+          <div class="actions">
+            <button type="button" data-action="demand" class="secondary">Stop</button>
+            <label class="control-toggle"><input type="checkbox" data-control="connected" checked /> Control channel connected</label>
+          </div>
+          <ul class="scene" data-scene aria-label="Scene elements"></ul>
+          <p class="offline" data-offline hidden>Control channel offline: requests will time out.</p>
+          <p class="scene-error" data-scene-error role="alert"></p>
+          <div class="actions">
+            <button type="button" data-action="attach">Attach viewer</button>
+            <button type="button" data-action="destroy" class="secondary">Destroy viewer</button>
+          </div>
+        </article>
+
+        <article class="example client">
+          <div class="example-heading">
+            <div><span class="eyebrow">CLIENT D</span><h2>Canvas view</h2></div>
+            <span class="status" role="status">Not attached</span>
+          </div>
+          <p class="client-note">A <code>CanvasViewer</code> receiving RGBA buffers through <code>showFrame()</code>, as from a CPU renderer in WASM. It shares the renderer's scene with A and B. Its list is the optional <code>SceneList</code> from <code>@r3v/web/ui</code>: every element can be shown, hidden and focused.</p>
+          <canvas aria-label="Client D view"></canvas>
+          <div class="actions">
+            <button type="button" data-action="demand" class="secondary">Stop</button>
+            <label class="control-toggle"><input type="checkbox" data-control="connected" checked /> Control channel connected</label>
+          </div>
+          <div class="scene-list" data-scene-list></div>
+          <p class="offline" data-offline hidden>Control channel offline: requests will time out.</p>
+          <div class="actions">
+            <button type="button" data-action="attach">Attach viewer</button>
+            <button type="button" data-action="destroy" class="secondary">Destroy viewer</button>
+          </div>
+        </article>
+      </section>
+
+      <code>const viewer = new VideoViewer(video); viewer.onCommand((command) =&gt; transport.send(command));</code>
+      <footer>Visibility is global for the renderer: a change made in one client reaches the other through the renderer's snapshot. A checkbox shows what the renderer displays; a pending request is marked "hiding…" or "showing…", and clicking again resends it. Without an answer, for example while a client's control channel is disconnected, the request is dropped after 5 s; reconnecting resynchronises the client from a fresh snapshot. The demo renderer has no camera, so "Focus" in client D frames the element in the image for a moment.</footer>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
