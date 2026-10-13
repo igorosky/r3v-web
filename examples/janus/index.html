@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>R3V · Janus stream</title>
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <main>
+      <header class="page-header">
+        <span class="eyebrow">R3V / JANUS TEST</span>
+        <h1>Renderer over WebRTC</h1>
+        <p>r3v-renderer → ffmpeg (H.264 RTP) → Janus Streaming → <code>VideoViewer</code>. Camera gestures come from the library and reach the renderer as ROS 2 topics through rosbridge.</p>
+      </header>
+
+      <article class="example client">
+        <div class="example-heading">
+          <div><span class="eyebrow">MOUNTPOINT 1</span><h2>r3v renderer</h2></div>
+          <span class="status" role="status">Not connected</span>
+        </div>
+        <video aria-label="Renderer stream"></video>
+        <p class="client-note">Left drag: orbit · right or middle drag: pan · wheel: zoom. rosbridge: <strong data-control>disconnected</strong></p>
+        <p class="scene-error" data-error role="alert"></p>
+        <div class="actions">
+          <button type="button" data-action="connect">Connect</button>
+          <button type="button" data-action="disconnect" class="secondary" disabled>Disconnect</button>
+          <button type="button" data-action="reset" class="secondary" disabled>Reset camera</button>
+        </div>
+      </article>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
