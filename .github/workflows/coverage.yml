@@ -1,0 +1,65 @@
+name: Coverage
+
+# Runs on master and on pull requests with the `coverage` label. The report is
+# a coverview page: an artifact of every run, on GitHub Pages for master.
+on:
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  coverage:
+    # On pull requests only with the label, and adding another label does not
+    # start a new run.
+    if: >-
+      github.event_name != 'pull_request' ||
+      (contains(github.event.pull_request.labels.*.name, 'coverage') &&
+      (github.event.action != 'labeled' || github.event.label.name == 'coverage'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # The patch report needs the merge base with master.
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run coverage
+
+      - uses: ./.github/actions/coverview
+        with:
+          info: coverage/lcov.info
+          pathspec: "*.ts"
+          title: r3v-web coverage
+          dataset: vitest
+          pages: ${{ github.ref == 'refs/heads/master' && github.event_name != 'pull_request' }}
+
+  deploy:
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    needs: coverage
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
