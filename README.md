@@ -10,6 +10,7 @@
 
 <p align="center">
   <a href="https://github.com/igorosky/r3v-web/actions/workflows/ci.yml"><img src="https://github.com/igorosky/r3v-web/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://igorosky.github.io/r3v-web/"><img src="https://github.com/igorosky/r3v-web/actions/workflows/coverage.yml/badge.svg" alt="Coverage"></a>
 </p>
 
 ---
@@ -130,6 +131,7 @@ npm run lint                      # oxlint with type-aware rules
 npm run build                     # ESM and types in dist/
 npx playwright install chromium   # once
 npm test                          # Vitest in headless Chromium
+npm run coverage                  # the same with coverage, report in coverage/
 ```
 
 Project layout:
@@ -139,6 +141,10 @@ Project layout:
   `view/` the video and canvas views, `ui/` the optional `SceneList`).
 - `examples/`: the demo pages above.
 - `tests/browser/`: Vitest tests that run in Chromium.
+
+The coverage report for master is at https://igorosky.github.io/r3v-web/.
+Pull requests with the `coverage` label get a summary comment and the report
+as a run artifact, plus a report of the changed lines.
 
 Commits follow [Conventional Commits](https://www.conventionalcommits.org/)
 (`feat(ui): ...`, `docs(examples): ...`).

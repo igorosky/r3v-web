@@ -10,5 +10,12 @@ export default defineConfig({
       headless: true,
       instances: [{ browser: 'chromium' }],
     },
+    // Only with --coverage (npm run coverage). lcov.info feeds the coverage
+    // workflow.
+    coverage: {
+      provider: 'v8',
+      include: ['src/**/*.ts'],
+      reporter: ['text-summary', 'lcov'],
+    },
   },
 });
